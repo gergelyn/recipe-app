@@ -18,7 +18,7 @@ class PagesController extends Controller
 
     public function suti() {
         $title = "Best-Recipes | Süti beállítások";
-        return view('pages.suti');
+        return view('pages.suti')->with('title', $title);
     }
 
     public function felhasznalasi_feltetelek() {
