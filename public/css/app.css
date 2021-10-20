@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css2?family=Lobster&family=Playfair+Display:wght@700&family=Poppins:wght@300;500;700&display=swap);
 /*! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com */
 
 /*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
@@ -22344,16 +22345,16 @@ video {
   vertical-align: text-bottom;
 }
 
-.font-sans {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+.font-lobster {
+  font-family: Lobster, cursive;
 }
 
-.font-serif {
-  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+.font-poppins {
+  font-family: Poppins, sans-serif;
 }
 
-.font-mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+.font-playfair {
+  font-family: Playfair Display, serif;
 }
 
 .text-xs {
@@ -53584,16 +53585,16 @@ video {
     vertical-align: text-bottom;
   }
 
-  .sm\:font-sans {
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .sm\:font-lobster {
+    font-family: Lobster, cursive;
   }
 
-  .sm\:font-serif {
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  .sm\:font-poppins {
+    font-family: Poppins, sans-serif;
   }
 
-  .sm\:font-mono {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .sm\:font-playfair {
+    font-family: Playfair Display, serif;
   }
 
   .sm\:text-xs {
@@ -84812,16 +84813,16 @@ video {
     vertical-align: text-bottom;
   }
 
-  .md\:font-sans {
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .md\:font-lobster {
+    font-family: Lobster, cursive;
   }
 
-  .md\:font-serif {
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  .md\:font-poppins {
+    font-family: Poppins, sans-serif;
   }
 
-  .md\:font-mono {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .md\:font-playfair {
+    font-family: Playfair Display, serif;
   }
 
   .md\:text-xs {
@@ -116040,16 +116041,16 @@ video {
     vertical-align: text-bottom;
   }
 
-  .lg\:font-sans {
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .lg\:font-lobster {
+    font-family: Lobster, cursive;
   }
 
-  .lg\:font-serif {
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  .lg\:font-poppins {
+    font-family: Poppins, sans-serif;
   }
 
-  .lg\:font-mono {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .lg\:font-playfair {
+    font-family: Playfair Display, serif;
   }
 
   .lg\:text-xs {
@@ -147268,16 +147269,16 @@ video {
     vertical-align: text-bottom;
   }
 
-  .xl\:font-sans {
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .xl\:font-lobster {
+    font-family: Lobster, cursive;
   }
 
-  .xl\:font-serif {
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  .xl\:font-poppins {
+    font-family: Poppins, sans-serif;
   }
 
-  .xl\:font-mono {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .xl\:font-playfair {
+    font-family: Playfair Display, serif;
   }
 
   .xl\:text-xs {
@@ -178496,16 +178497,16 @@ video {
     vertical-align: text-bottom;
   }
 
-  .\32xl\:font-sans {
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .\32xl\:font-lobster {
+    font-family: Lobster, cursive;
   }
 
-  .\32xl\:font-serif {
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  .\32xl\:font-poppins {
+    font-family: Poppins, sans-serif;
   }
 
-  .\32xl\:font-mono {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .\32xl\:font-playfair {
+    font-family: Playfair Display, serif;
   }
 
   .\32xl\:text-xs {
