@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('layouts.app');
 });
+
+Route::get('/impresszum', [PagesController::class, 'impresszum']);
+Route::get('/adatvedelem', [PagesController::class, 'adatvedelem']);
+Route::get('/suti-beallitasok', [PagesController::class, 'suti']);
+Route::get('/felhasznalasi-feltetelek', [PagesController::class, 'felhasznalasi_feltetelek']);
