@@ -8,7 +8,7 @@
                 <a href="#" class="p-3">Receptek</a>
             </li>
             <li>
-                <a href="#" class="p-3">Blog</a>
+                <a href="/posts" class="p-3">Blog</a>
             </li>
             <li>
                 <a href="#" class="p-3">Vlog</a>
