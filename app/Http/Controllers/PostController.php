@@ -26,7 +26,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $title = "Blog írása";
+        return view('posts.create')->with('title', $title);
     }
 
     /**
@@ -37,7 +38,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = "Blog";
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        Post::create($request->all());
+        return redirect('/posts')->with($title);
     }
 
     /**
