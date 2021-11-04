@@ -15,10 +15,13 @@ use App\Http\Controllers\PagesController;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    $title = "Főoldal";
+    return view('layouts.app')->with('title', $title);
 });
 
 Route::get('/impresszum', [PagesController::class, 'impresszum']);
 Route::get('/adatvedelem', [PagesController::class, 'adatvedelem']);
 Route::get('/suti-beallitasok', [PagesController::class, 'suti']);
 Route::get('/felhasznalasi-feltetelek', [PagesController::class, 'felhasznalasi_feltetelek']);
+
+Route::resource('posts', PostController::class);
