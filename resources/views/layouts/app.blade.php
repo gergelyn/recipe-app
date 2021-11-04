@@ -10,7 +10,9 @@
 </head>
 <body>
     @include('components.navbar')
-    @yield('content')
+    <main class="mx-56 py-6">
+        @yield('content')
+    </main> 
     @include('components.footer')
 </body>
 </html>
