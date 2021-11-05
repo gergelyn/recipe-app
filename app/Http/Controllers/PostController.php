@@ -45,7 +45,7 @@ class PostController extends Controller
         ]);
 
         Post::create($request->all());
-        return redirect('/posts')->with($title);
+        return redirect('/posts')->with('title', $title);
     }
 
     /**
@@ -80,7 +80,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        $post->update($request->all());
+
+        return redirect('/posts')->with('title', "Blog")->with('success', 'Sikeres poszt szerkesztés!');
     }
 
     /**
