@@ -2,6 +2,12 @@
 
 @section('content')
     <h1>Posts</h1>
+    @if ($message = Session::get('success'))
+        <div class="bg-green-600 text-white w-1/3">
+            <strong>Success!</strong>
+            <p>{{ $message }}</p>
+        </div>
+    @endif
     @if (count($posts) > 0)
         @foreach ($posts as $post)
             <div class="flex flex-col bg-white shadow-md w-3/12 rounded-xl">
