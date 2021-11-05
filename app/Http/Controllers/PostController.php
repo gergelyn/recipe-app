@@ -44,7 +44,9 @@ class PostController extends Controller
         ]);
 
         Post::create($request->all());
-        return redirect('/posts')->with('title', 'Blog');
+        return redirect('/posts')
+            ->with('title', 'Blog')
+            ->with('success', 'Sikeres posztolás!');
     }
 
     /**
@@ -99,6 +101,8 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect('/posts')->with('title', 'Blog');
+        return redirect('/posts')
+            ->with('title', 'Blog')
+            ->with('success', 'Sikeres poszt törlés!');
     }
 }
