@@ -90,6 +90,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $title = "Blog";
+        $post->delete();
+        return redirect('/posts')->with('title', $title);
     }
 }
