@@ -14,9 +14,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $title = "Blog";
         $posts = Post::orderBy('created_at', 'desc')->paginate(9);
-        return view('posts.index')->with('posts', $posts)->with('title', $title);
+        return view('posts.index')
+            ->with('posts', $posts)
+            ->with('title', 'Blog');
     }
 
     /**
@@ -26,8 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $title = "Blog írása";
-        return view('posts.create')->with('title', $title);
+        return view('posts.create')->with('title', 'Blog írása');
     }
 
     /**
@@ -38,14 +38,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $title = "Blog";
         $request->validate([
             'title' => 'required',
             'body' => 'required'
         ]);
 
         Post::create($request->all());
-        return redirect('/posts')->with('title', $title);
+        return redirect('/posts')->with('title', 'Blog');
     }
 
     /**
@@ -67,8 +66,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $title = "Poszt szerkesztése";
-        return view('posts.edit', compact('post'))->with('title', $title);
+        return view('posts.edit', compact('post'))->with('title', 'Poszt szerkesztése');
     }
 
     /**
@@ -87,7 +85,9 @@ class PostController extends Controller
 
         $post->update($request->all());
 
-        return redirect('/posts')->with('title', "Blog")->with('success', 'Sikeres poszt szerkesztés!');
+        return redirect('/posts')
+            ->with('title', 'Blog')
+            ->with('success', 'Sikeres poszt szerkesztés!');
     }
 
     /**
@@ -98,8 +98,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $title = "Blog";
         $post->delete();
-        return redirect('/posts')->with('title', $title);
+        return redirect('/posts')->with('title', 'Blog');
     }
 }
