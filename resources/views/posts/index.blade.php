@@ -2,13 +2,14 @@
 
 @section('content')
     <h1>Posts</h1>
+    <a href="{{ route('posts.create') }}" class="rounded-full bg-green-600 text-white px-4 py-2">Create</a>
     @if ($message = Session::get('success'))
         <div class="bg-green-600 text-white w-1/3">
             <strong>Success!</strong>
             <p>{{ $message }}</p>
         </div>
     @endif
-    <div class="flex mx-48 justify-between">
+    <div class="flex mx-48 justify-center">
         @if (count($posts) > 0)
             @foreach ($posts as $post)
                 <div class="flex flex-col bg-white shadow-md w-3/12 rounded-xl">
