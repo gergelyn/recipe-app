@@ -67,7 +67,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $title = "Poszt szerkesztése";
+        return view('posts.edit', compact('post'))->with('title', $title);
     }
 
     /**
