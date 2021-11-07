@@ -14,8 +14,10 @@
         </div>
     @endif
 
-    <form action="{{ route('posts.store') }}" method="POST" class="flex flex-col w-1/3">
+    <form action="{{ route('posts.store') }}" method="POST" class="flex flex-col w-1/3" enctype="multipart/form-data">
         @csrf
+        <label for="image">Poszt képe</label>
+        <input id="image" type="file" name="image" accept="image/*">
         <label for="title">Cím</label>
         <input id="title" type="text" name="title" class="border-2 border-black rounded-md">
         <label for="body">Szöveg</label>
