@@ -12,4 +12,8 @@ class Post extends Model
         'title',
         'body'
     ];
+
+    public function cover_image() {
+        return $this->hasOne('App\PostCoverImage');
+    }
 }
