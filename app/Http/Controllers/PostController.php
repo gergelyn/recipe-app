@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostCoverImage;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class PostController extends Controller
 {
     /**
@@ -14,7 +15,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(9);
+        $posts = DB::table('posts')
+                    ->join('post_cover_images', 'posts.id', '=', 'post_cover_images.post_id')
+                    ->select('*')
+                    ->latest('posts.created_at')
+                    ->paginate(9);
         return view('posts.index')
             ->with('posts', $posts)
             ->with('title', 'Blog');
@@ -40,10 +45,31 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        Post::create($request->all());
+        $title = $request->title;
+        $body = $request->body;
+        $image = $request->image;
+
+        $post = Post::create([
+            'title' => $title,
+            'body' => $body
+        ]);
+
+        // Post::create($request->all());
+
+        
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('images'), $imageName);
+        // $imagePath = Storage::disk('local')->put('/posts', $image);
+        PostCoverImage::create([
+            'post_image_path' => '/images/' . $imageName,
+            'post_image_caption' => $title,
+            'post_id' => $post->id
+        ]);
+
         return redirect('/posts')
             ->with('title', 'Blog')
             ->with('success', 'Sikeres posztolás!');
