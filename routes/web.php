@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RecipeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,4 @@ Route::get('/suti-beallitasok', [PagesController::class, 'suti']);
 Route::get('/felhasznalasi-feltetelek', [PagesController::class, 'felhasznalasi_feltetelek']);
 
 Route::resource('posts', PostController::class);
+Route::resource('recipes', RecipeController::class);
