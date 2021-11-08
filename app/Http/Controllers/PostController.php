@@ -108,11 +108,28 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        $post->update($request->all());
+        $image = PostCoverImage::find($post->id);
 
+        $post->update([
+            'title' => $request->title,
+            'body' => $request->body,
+        ]);
+
+        if ($request->hasFile('image')) {
+            unlink(public_path().$image->post_image_path);
+            $newImageReq = $request->image;
+            $imageName = time().'.'.$newImageReq->extension();
+            $newImageReq->move(public_path('images'), $imageName);
+            $image->update([
+                'post_image_path' => '/images/' . $imageName,
+                'post_image_caption' => $request->title,
+            ]);
+        }
+        
         return redirect('/posts')
             ->with('title', 'Blog')
             ->with('success', 'Sikeres poszt szerkesztés!');
