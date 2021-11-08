@@ -13,9 +13,11 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('posts.update', $post->id) }}" method="POST" class="flex flex-col w-1/3">
+    <form action="{{ route('posts.update', $post->id) }}" method="POST" class="flex flex-col w-1/3" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        <label for="image">Poszt képe</label>
+        <input id="image" type="file" name="image" accept="image/*">
         <label for="title">Cím</label>
         <input id="title" type="text" name="title" class="border-2 border-black rounded-md" value="{{ $post->title }}">
         <label for="body">Szöveg</label>
