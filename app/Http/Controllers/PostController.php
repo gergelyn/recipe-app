@@ -83,7 +83,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'))->with('title', $post->title);
+        $image = PostCoverImage::find($post->id);
+        return view('posts.show')
+            ->with(compact('post'))
+            ->with('image', $image)
+            ->with('title', $post->title);
     }
 
     /**
