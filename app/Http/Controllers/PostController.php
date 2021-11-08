@@ -126,6 +126,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $image = PostCoverImage::find($post->id);
+        unlink(public_path().$image->post_image_path);
+        $image->delete();
         $post->delete();
         return redirect('/posts')
             ->with('title', 'Blog')
