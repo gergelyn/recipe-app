@@ -9,7 +9,7 @@ class RecipeDifficulty extends Model
 {
     use HasFactory;
 
-    public function posts() {
-        return $this->hasMany('App/Recipe');
+    public function recipes() {
+        return $this->hasMany(Recipe::class);
     }
 }
