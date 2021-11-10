@@ -22,4 +22,8 @@ class Recipe extends Model
     public function cover_image() {
         return $this->hasOne(RecipeCoverImage::class);
     }
+
+    public function meal_type() {
+        return $this->hasOne(RecipeMealType::class);
+    }
 }
