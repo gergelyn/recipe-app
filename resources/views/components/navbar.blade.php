@@ -5,7 +5,7 @@
                 <a href="/" class="p-3 pr-6 font-lobster text-2xl text-yellow-600 hover:text-yellow-700">Best-Recipes</a>
             </li>
             <li>
-                <a href="#" class="p-3">Receptek</a>
+                <a href="/recipes" class="p-3">Receptek</a>
             </li>
             <li>
                 <a href="/posts" class="p-3">Blog</a>
