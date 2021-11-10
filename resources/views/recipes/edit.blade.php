@@ -16,6 +16,8 @@
     <form action="{{ route('recipes.update', $recipe->id) }}" method="POST" class="flex flex-col w-1/3" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        <label for="image">Recept képe</label>
+        <input type="file" name="image" id="image" accept="image/*">
         <label for="title">Cím</label>
         <input id="title" type="text" name="title" class="border-2 border-black rounded-md" value="{{ $recipe->title }}">
         <label for="cook_time">Idô</label>
