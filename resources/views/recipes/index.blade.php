@@ -14,6 +14,7 @@
             @foreach ($recipes as $recipe)
                 @dump($recipe)
                 <div class="flex flex-col bg-white shadow-md rounded-xl">
+                    <img src="{{ $recipe->recipe_image_path }}" alt="{{ $recipe->recipe_image_caption }}">
                     <h4 class="ml-6 font-bold text-lg"><a href="/recipes/{{ $recipe->id }}">{{ $recipe->title }}</a></h4>
                     <p class="ml-6 my-2 text-xs">{{ $recipe->created_at }}</p>
                     <p class="ml-6 my-2 text-xs">{{ Str::title($recipe->level) }}</p>
