@@ -9,6 +9,12 @@ class Recipe extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'cook_time',
+        'difficulty_id'
+    ];
+
     public function difficulty() {
         return $this->hasOne('App\RecipeDifficulty');
     }
