@@ -16,6 +16,6 @@ class RecipeCoverImage extends Model
     ];
 
     public function recipe() {
-        return $this->belongsTo('App\Recipe');
+        return $this->belongsTo(Recipe::class);
     }
 }
