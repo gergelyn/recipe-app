@@ -18,4 +18,8 @@ class Recipe extends Model
     public function difficulty() {
         return $this->hasOne('App\RecipeDifficulty');
     }
+
+    public function cover_image() {
+        return $this->hasOne('App\RecipeCoverImage');
+    }
 }
