@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recipe;
+use App\Models\RecipeCoverImage;
 use App\Models\RecipeDifficulty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,8 @@ class RecipeController extends Controller
     {
         $recipes = DB::table('recipes')
                     ->join('recipe_difficulties', 'recipes.difficulty_id', '=', 'recipe_difficulties.id')
-                    ->select('recipes.*', 'recipe_difficulties.level')
+                    ->join('recipe_cover_images', 'recipes.id', '=', 'recipe_cover_images.recipe_id')
+                    ->select('recipes.*', 'recipe_difficulties.level', 'recipe_cover_images.recipe_image_path', 'recipe_cover_images.recipe_image_caption')
                     ->paginate(9);
         return view('recipes.index')
             ->with('recipes', $recipes)
@@ -50,15 +52,26 @@ class RecipeController extends Controller
         $request->validate([
             'title' => 'required',
             'cook_time' => 'required',
-            'difficulty_id' => 'required'
+            'difficulty_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        Recipe::create([
+        $title = $request->title;
+        $image = $request->image;
+
+        $recipe = Recipe::create([
             'title' => $request->title,
             'cook_time' => $request->cook_time,
             'difficulty_id' => $request->difficulty_id
         ]);
 
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('images'), $imageName);
+        RecipeCoverImage::create([
+            'recipe_image_path' => '/images/' . $imageName,
+            'recipe_image_caption' => $title,
+            'recipe_id' => $recipe->id
+        ]);
         return redirect('/recipes')
             ->with('title', 'Recipes')
             ->with('success', 'Sikeres posztolás!');
@@ -74,7 +87,8 @@ class RecipeController extends Controller
     {
         $recipe = DB::table('recipes')
                 ->join('recipe_difficulties', 'recipes.difficulty_id', '=', 'recipe_difficulties.id')
-                ->select('recipes.*', 'recipe_difficulties.level')
+                ->join('recipe_cover_images', 'recipes.id', '=', 'recipe_cover_images.recipe_id')
+                ->select('recipes.*', 'recipe_difficulties.level', 'recipe_cover_images.recipe_image_path', 'recipe_cover_images.recipe_image_caption')
                 ->where('recipes.id', '=', $recipe->id)
                 ->first();
         return view('recipes.show')
@@ -108,10 +122,28 @@ class RecipeController extends Controller
         $request->validate([
             'title' => 'required',
             'cook_time' => 'required',
-            'difficulty_id' => 'required'
+            'difficulty_id' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        $recipe->update($request->all());
+        $image = $recipe->cover_image()->where('recipe_id', $recipe->id)->first();
+
+        $recipe->update([
+            'title' => $request->title,
+            'cook_time' => $request->cook_time,
+            'difficulty_id' => $request->difficulty_id
+        ]);
+
+        if ($request->hasFile('image')) {
+            unlink(public_path().$image->recipe_image_path);
+            $newImageReq = $request->image;
+            $imageName = time().'.'.$newImageReq->extension();
+            $newImageReq->move(public_path('images'), $imageName);
+            $image->update([
+                'recipe_image_path' => '/images/' . $imageName,
+                'recipe_image_caption' => $request->title
+            ]);
+        }
 
         return redirect('/recipes')
             ->with('title', 'Recipes')
@@ -126,6 +158,9 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
+        $image = $recipe->cover_image()->where('recipe_id', $recipe->id)->first();
+        unlink(public_path().$image->recipe_image_path);
+        $image->delete();
         $recipe->delete();
         return redirect('/recipes')
             ->with('title', 'Recipes')
