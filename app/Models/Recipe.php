@@ -12,7 +12,8 @@ class Recipe extends Model
     protected $fillable = [
         'title',
         'cook_time',
-        'difficulty_id'
+        'difficulty_id',
+        'meal_type_id'
     ];
 
     public function difficulty() {
