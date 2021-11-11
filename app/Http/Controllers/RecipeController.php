@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use App\Models\RecipeCoverImage;
 use App\Models\RecipeDifficulty;
+use App\Models\RecipeMealType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,8 @@ class RecipeController extends Controller
         $recipes = DB::table('recipes')
                     ->join('recipe_difficulties', 'recipes.difficulty_id', '=', 'recipe_difficulties.id')
                     ->join('recipe_cover_images', 'recipes.id', '=', 'recipe_cover_images.recipe_id')
-                    ->select('recipes.*', 'recipe_difficulties.level', 'recipe_cover_images.recipe_image_path', 'recipe_cover_images.recipe_image_caption')
+                    ->join('recipe_meal_types', 'recipes.meal_type_id', '=', 'recipe_meal_types.id')
+                    ->select('recipes.*', 'recipe_difficulties.level', 'recipe_cover_images.recipe_image_path', 'recipe_cover_images.recipe_image_caption', 'recipe_meal_types.meal_type')
                     ->paginate(9);
         return view('recipes.index')
             ->with('recipes', $recipes)
@@ -36,8 +38,10 @@ class RecipeController extends Controller
     public function create()
     {
         $difficulties = RecipeDifficulty::all();
+        $meal_types = RecipeMealType::all();
         return view('recipes.create')
             ->with('difficulties', $difficulties)
+            ->with('meal_types', $meal_types)
             ->with('title', 'Recept írása');
     }
 
@@ -53,7 +57,8 @@ class RecipeController extends Controller
             'title' => 'required',
             'cook_time' => 'required',
             'difficulty_id' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'meal_type_id' => 'required'
         ]);
 
         $title = $request->title;
@@ -62,7 +67,8 @@ class RecipeController extends Controller
         $recipe = Recipe::create([
             'title' => $request->title,
             'cook_time' => $request->cook_time,
-            'difficulty_id' => $request->difficulty_id
+            'difficulty_id' => $request->difficulty_id,
+            'meal_type_id' => $request->meal_type_id
         ]);
 
         $imageName = time().'.'.$image->extension();
@@ -88,7 +94,8 @@ class RecipeController extends Controller
         $recipe = DB::table('recipes')
                 ->join('recipe_difficulties', 'recipes.difficulty_id', '=', 'recipe_difficulties.id')
                 ->join('recipe_cover_images', 'recipes.id', '=', 'recipe_cover_images.recipe_id')
-                ->select('recipes.*', 'recipe_difficulties.level', 'recipe_cover_images.recipe_image_path', 'recipe_cover_images.recipe_image_caption')
+                ->join('recipe_meal_types', 'recipes.meal_type_id', '=', 'recipe_meal_types.id')
+                ->select('recipes.*', 'recipe_difficulties.level', 'recipe_cover_images.recipe_image_path', 'recipe_cover_images.recipe_image_caption', 'recipe_meal_types.meal_type')
                 ->where('recipes.id', '=', $recipe->id)
                 ->first();
         return view('recipes.show')
@@ -105,8 +112,10 @@ class RecipeController extends Controller
     public function edit(Recipe $recipe)
     {
         $difficulties = RecipeDifficulty::all();
+        $meal_types = RecipeMealType::all();
         return view('recipes.edit', compact('recipe'))
             ->with('difficulties', $difficulties)
+            ->with('meal_types', $meal_types)
             ->with('title', 'Recept szerkesztése');
     }
 
@@ -123,7 +132,8 @@ class RecipeController extends Controller
             'title' => 'required',
             'cook_time' => 'required',
             'difficulty_id' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'meal_type_id' => 'required'
         ]);
 
         $image = $recipe->cover_image()->where('recipe_id', $recipe->id)->first();
@@ -131,7 +141,8 @@ class RecipeController extends Controller
         $recipe->update([
             'title' => $request->title,
             'cook_time' => $request->cook_time,
-            'difficulty_id' => $request->difficulty_id
+            'difficulty_id' => $request->difficulty_id,
+            'meal_type_id' => $request->meal_type_id
         ]);
 
         if ($request->hasFile('image')) {
