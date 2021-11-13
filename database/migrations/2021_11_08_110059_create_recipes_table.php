@@ -17,8 +17,14 @@ class CreateRecipesTable extends Migration
             $table->id();
             $table->string('title');
             $table->integer('cook_time');
-            $table->unsignedBigInteger('difficulty_id');
-            $table->foreign('difficulty_id')->references('id')->on('recipe_difficulties');
+            $table->foreignId('difficulty_id')
+                ->constrained('recipe_difficulties')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('meal_type_id')
+                ->constrained('recipe_meal_types')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
