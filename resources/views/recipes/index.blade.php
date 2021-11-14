@@ -10,15 +10,15 @@
         </div>
     @endif
     <div class="grid grid-cols-3 gap-4 mt-4">
-        @if (count($recipes) > 0)
+        @if ($recipes->count())
             @foreach ($recipes as $recipe)
                 @dump($recipe)
                 <div class="flex flex-col bg-white shadow-md rounded-xl">
-                    <img src="{{ $recipe->recipe_image_path }}" alt="{{ $recipe->recipe_image_caption }}">
+                    {{-- <img src="{{ $recipe->cover_image->recipe_image_path }}" alt="{{ $recipe->cover_image->recipe_image_caption }}"> --}}
                     <h4 class="ml-6 font-bold text-lg"><a href="/recipes/{{ $recipe->id }}">{{ $recipe->title }}</a></h4>
-                    <span class="ml-6 my-2 text-xs">{{ $recipe->created_at }}</span>
-                    <span class="ml-6 my-2 text-xs">{{ Str::title($recipe->level) }}</span>
-                    <span class="ml-6 my-2 text-xs">{{ Str::title($recipe->meal_type) }}</span>
+                    <span class="ml-6 my-2 text-xs">{{ date("Y-m-d", strtotime($recipe->created_at)) }}</span>
+                    <span class="ml-6 my-2 text-xs">{{ Str::title($difficulties->find($recipe->difficulty_id)->level) }}</span>
+                    <span class="ml-6 my-2 text-xs">{{ Str::title($meal_types->find($recipe->meal_type_id)->meal_type) }}</span>
                     <form action="{{ route('recipes.destroy', $recipe->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
