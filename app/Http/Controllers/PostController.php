@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\PostCoverImage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class PostController extends Controller
@@ -46,7 +47,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'body' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $title = $request->title;
@@ -55,7 +56,8 @@ class PostController extends Controller
 
         $post = Post::create([
             'title' => $title,
-            'body' => $body
+            'body' => $body,
+            'user_id' => auth()->user()->id
         ]);
 
         // Post::create($request->all());
@@ -72,7 +74,7 @@ class PostController extends Controller
 
         return redirect('/posts')
             ->with('title', 'Blog')
-            ->with('success', 'Sikeres posztolás!');
+            ->with('status', 'Sikeres posztolás!');
     }
 
     /**
@@ -98,6 +100,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('/posts')->with('status', 'Nem elérhetô');
+        }
         return view('posts.edit', compact('post'))->with('title', 'Poszt szerkesztése');
     }
 
@@ -136,7 +141,7 @@ class PostController extends Controller
         
         return redirect('/posts')
             ->with('title', 'Blog')
-            ->with('success', 'Sikeres poszt szerkesztés!');
+            ->with('status', 'Sikeres poszt szerkesztés!');
     }
 
     /**
@@ -147,12 +152,16 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('/posts')->with('status', 'Nem elérhetô!');
+        }
+
         $image = PostCoverImage::find($post->id);
         unlink(public_path().$image->post_image_path);
         $image->delete();
         $post->delete();
         return redirect('/posts')
             ->with('title', 'Blog')
-            ->with('success', 'Sikeres poszt törlés!');
+            ->with('status', 'Sikeres poszt törlés!');
     }
 }
