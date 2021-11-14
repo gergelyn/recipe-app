@@ -20,12 +20,24 @@
             </form>
         </div>
         <ul class="flex items-center">
-            <li class="mr-6">
-                <a href="#" class="p-3 border border-yellow-600 hover:border-yellow-700 hover:bg-yellow-700 hover:text-white rounded-full text-yellow-600">Belépés</a>
-            </li>
-            <li>
-                <a href="#" class="p-3 border border-yellow-600 bg-yellow-600 rounded-full text-white hover:border-yellow-700 hover:bg-yellow-700">Regisztráció</a>
-            </li>
+            @auth
+                <li class="mr-6">
+                    {{ auth()->user()->name }}
+                </li>
+                <li class="mr-6">
+                    <a href="/logout" class="p-3 border border-yellow-600 hover:border-yellow-700 hover:bg-yellow-700 hover:text-white rounded-full text-yellow-600">Kijelentkezés</a>
+                </li>
+            @endauth
+            
+            @guest
+                <li class="mr-6">
+                    <a href="/login" class="p-3 border border-yellow-600 hover:border-yellow-700 hover:bg-yellow-700 hover:text-white rounded-full text-yellow-600">Belépés</a>
+                </li>
+                <li>
+                    <a href="/register" class="p-3 border border-yellow-600 bg-yellow-600 rounded-full text-white hover:border-yellow-700 hover:bg-yellow-700">Regisztráció</a>
+                </li>
+            @endguest
+            
         </ul>
     </nav>
 </header>
