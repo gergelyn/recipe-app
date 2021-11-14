@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostController;
@@ -17,8 +18,8 @@ use App\Http\Controllers\SearchController;
 |
 */
 
-Route::get('/', [PagesController::class, 'index']);
 
+Route::get('/', [PagesController::class, 'index']);
 Route::get('/impresszum', [PagesController::class, 'impresszum']);
 Route::get('/adatvedelem', [PagesController::class, 'adatvedelem']);
 Route::get('/suti-beallitasok', [PagesController::class, 'suti']);
@@ -28,3 +29,6 @@ Route::resource('posts', PostController::class);
 Route::resource('recipes', RecipeController::class);
 
 Route::get('/search', SearchController::class);
+
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'store']);
