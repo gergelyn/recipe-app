@@ -2,10 +2,12 @@
 
 @section('content')
     <h1 class="text-lg font-bold mb-2">Posts</h1>
+    @auth
     <a href="{{ route('posts.create') }}" class="rounded-full bg-green-600 text-white px-4 py-2">Create</a>
-    @if ($message = Session::get('success'))
+    @endauth
+    
+    @if ($message = Session::get('status'))
         <div class="bg-green-600 text-white w-1/3">
-            <strong>Success!</strong>
             <p>{{ $message }}</p>
         </div>
     @endif
@@ -16,6 +18,7 @@
                     <img src="{{ $post->post_image_path }}" alt="{{ $post->post_image_caption }}">
                     <h4 class="ml-6 font-bold text-lg"><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h4>
                     <p class="ml-6 my-2 text-xs">{{ $post->created_at }}</p>
+                    <p class="ml-6 my-2 text-xs">{{ $post->author->name }}</p>
                     <form action="{{ route('posts.destroy', $post->id) }}" method="post">
                         @csrf
                         @method('DELETE')
