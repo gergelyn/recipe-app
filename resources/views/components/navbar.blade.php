@@ -14,6 +14,11 @@
                 <a href="#" class="p-3">Vlog</a>
             </li>
         </ul>
+        <div class="flex items-center">
+            <form action="/search" method="GET">
+                <input type="search" name="query" id="query" class="border-2 border-black rounded-md px-4 py-2" placeholder="Search Recipe">
+            </form>
+        </div>
         <ul class="flex items-center">
             <li class="mr-6">
                 <a href="#" class="p-3 border border-yellow-600 hover:border-yellow-700 hover:bg-yellow-700 hover:text-white rounded-full text-yellow-600">Belépés</a>
