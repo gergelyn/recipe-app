@@ -66,7 +66,8 @@ class RecipeController extends Controller
             'title' => $request->title,
             'cook_time' => $request->cook_time,
             'difficulty_id' => $request->difficulty_id,
-            'meal_type_id' => $request->meal_type_id
+            'meal_type_id' => $request->meal_type_id,
+            'user_id' => auth()->user()->id
         ]);
 
         $imageName = time().'.'.$image->extension();
@@ -78,7 +79,7 @@ class RecipeController extends Controller
         ]);
         return redirect('/recipes')
             ->with('title', 'Recipes')
-            ->with('success', 'Sikeres posztolás!');
+            ->with('status', 'Sikeres posztolás!');
     }
 
     /**
@@ -108,6 +109,9 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
+        if(auth()->user()->id !== $recipe->user_id) {
+            return redirect('/recipes')->with('status', 'Nem elérhetô');
+        }
         $difficulties = RecipeDifficulty::all();
         $meal_types = RecipeMealType::all();
         return view('recipes.edit', compact('recipe'))
@@ -155,7 +159,7 @@ class RecipeController extends Controller
 
         return redirect('/recipes')
             ->with('title', 'Recipes')
-            ->with('success', 'Sikeres recept szerkesztés!');
+            ->with('status', 'Sikeres recept szerkesztés!');
     }
 
     /**
@@ -166,13 +170,16 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
+        if(auth()->user()->id !== $recipe->user_id) {
+            return redirect('/recipes')->with('status', 'Nem elérhetô');
+        }
         $image = $recipe->cover_image()->where('recipe_id', $recipe->id)->first();
         unlink(public_path().$image->recipe_image_path);
         $image->delete();
         $recipe->delete();
         return redirect('/recipes')
             ->with('title', 'Recipes')
-            ->with('success', 'Sikeres recept törlés!');
+            ->with('status', 'Sikeres recept törlés!');
     }
 }
 
