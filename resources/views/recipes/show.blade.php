@@ -6,5 +6,6 @@
     <p>{{ $recipe->cook_time }}</p>
     <p>{{ $difficulty }}</p>
     <p>{{ $meal_type }}</p>
+    <small>{{ $recipe->author->name }}</small>
     <small>{{ $recipe->created_at }}</small>
 @endsection
