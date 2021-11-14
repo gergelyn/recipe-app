@@ -15,7 +15,7 @@
         @if (count($posts) > 0)
             @foreach ($posts as $post)
                 <div class="flex flex-col bg-white shadow-md rounded-xl">
-                    <img src="{{ $post->post_image_path }}" alt="{{ $post->post_image_caption }}">
+                    <img src="{{ $post->cover_image->post_image_path }}" alt="{{ $post->cover_image->post_image_caption }}">
                     <h4 class="ml-6 font-bold text-lg"><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h4>
                     <p class="ml-6 my-2 text-xs">{{ $post->created_at }}</p>
                     <p class="ml-6 my-2 text-xs">{{ $post->author->name }}</p>
