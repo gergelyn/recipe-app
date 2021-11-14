@@ -1,17 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-    <form action="/search" method="GET" class="grid grid-cols-3 gap-4">
-        <input type="search" name="query" id="query" class="border-2 border-black rounded-md px-4 py-2" placeholder="Search Recipe">
-        <select name="difficulty_id" id="difficulty_id" class="border-2 border-black rounded-md px-4 py-2">
-            @foreach ($difficulties as $difficulty)
-                <option value="{{ $difficulty->id }}">{{ $difficulty->level }}</option>
-            @endforeach
-        </select>
-        <select name="meal_type_id" id="meal_type_id" class="border-2 border-black rounded-md px-4 py-2">
-            @foreach ($meal_types as $meal_type)
-                <option value="{{ $meal_type->id }}">{{ $meal_type->meal_type }}</option>
-            @endforeach
-        </select>
-    </form>
+    <div class="grid grid-cols-3 gap-4 mt-4">
+        <div class="flex flex-col bg-white shadow-md rounded-xl">
+            {{-- <img src="{{ $soup->cover_image->recipe_image_path }}" alt="{{ $soup->cover_image->recipe_image_caption }}"> --}}
+            <h4 class="ml-6 font-bold text-lg"><a href="/recipes/{{ $soup->id }}">{{ $soup->title }}</a></h4>
+            <span class="ml-6 my-2 text-xs">{{ date("Y-m-d", strtotime($soup->created_at)) }}</span>
+            <span class="ml-6 my-2 text-xs">{{ Str::title($difficulties->find($soup->difficulty_id)->level) }}</span>
+            <span class="ml-6 my-2 text-xs">{{ Str::title($meal_types->find($soup->meal_type_id)->meal_type) }}</span>
+        </div>
+        <div class="flex flex-col bg-white shadow-md rounded-xl">
+            {{-- <img src="{{ $main_course->cover_image->recipe_image_path }}" alt="{{ $main_course->cover_image->recipe_image_caption }}"> --}}
+            <h4 class="ml-6 font-bold text-lg"><a href="/recipes/{{ $main_course->id }}">{{ $main_course->title }}</a></h4>
+            <span class="ml-6 my-2 text-xs">{{ date("Y-m-d", strtotime($main_course->created_at)) }}</span>
+            <span class="ml-6 my-2 text-xs">{{ Str::title($difficulties->find($main_course->difficulty_id)->level) }}</span>
+            <span class="ml-6 my-2 text-xs">{{ Str::title($meal_types->find($main_course->meal_type_id)->meal_type) }}</span>
+        </div>
+        <div class="flex flex-col bg-white shadow-md rounded-xl">
+            {{-- <img src="{{ $dessert->cover_image->recipe_image_path }}" alt="{{ $dessert->cover_image->recipe_image_caption }}"> --}}
+            <h4 class="ml-6 font-bold text-lg"><a href="/recipes/{{ $dessert->id }}">{{ $dessert->title }}</a></h4>
+            <span class="ml-6 my-2 text-xs">{{ date("Y-m-d", strtotime($dessert->created_at)) }}</span>
+            <span class="ml-6 my-2 text-xs">{{ Str::title($difficulties->find($dessert->difficulty_id)->level) }}</span>
+            <span class="ml-6 my-2 text-xs">{{ Str::title($meal_types->find($dessert->meal_type_id)->meal_type) }}</span>
+        </div>
+    </div>
 @endsection
