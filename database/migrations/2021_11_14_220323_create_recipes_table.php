@@ -25,6 +25,10 @@ class CreateRecipesTable extends Migration
                 ->constrained('recipe_meal_types')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
