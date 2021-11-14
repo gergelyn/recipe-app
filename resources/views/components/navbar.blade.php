@@ -25,7 +25,11 @@
                     {{ auth()->user()->name }}
                 </li>
                 <li class="mr-6">
-                    <a href="/logout" class="p-3 border border-yellow-600 hover:border-yellow-700 hover:bg-yellow-700 hover:text-white rounded-full text-yellow-600">Kijelentkezés</a>
+
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="p-3 border border-yellow-600 hover:border-yellow-700 hover:bg-yellow-700 hover:text-white rounded-full text-yellow-600">Kijelentkezés</button>
+                    </form>
                 </li>
             @endauth
             
