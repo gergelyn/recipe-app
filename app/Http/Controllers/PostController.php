@@ -16,11 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')
-                    ->join('post_cover_images', 'posts.id', '=', 'post_cover_images.post_id')
-                    ->select('*')
-                    ->latest('posts.created_at')
-                    ->paginate(9);
+        $posts = Post::all();
         return view('posts.index')
             ->with('posts', $posts)
             ->with('title', 'Blog');
