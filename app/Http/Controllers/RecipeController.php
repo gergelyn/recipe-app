@@ -18,16 +18,14 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes = DB::table('recipes')
-                    ->join('recipe_difficulties', 'recipes.difficulty_id', '=', 'recipe_difficulties.id')
-                    ->join('recipe_cover_images', 'recipes.id', '=', 'recipe_cover_images.recipe_id')
-                    ->join('recipe_meal_types', 'recipes.meal_type_id', '=', 'recipe_meal_types.id')
-                    ->select('recipes.*', 'recipe_difficulties.level', 'recipe_cover_images.recipe_image_path', 'recipe_cover_images.recipe_image_caption', 'recipe_meal_types.meal_type')
-                    ->paginate(9);
+        $recipes = Recipe::all();
+        $difficulties = RecipeDifficulty::all();
+        $meal_types = RecipeMealType::all();
         return view('recipes.index')
             ->with('recipes', $recipes)
+            ->with('difficulties', $difficulties)
+            ->with('meal_types', $meal_types)
             ->with('title', 'Recipes');
-
     }
 
     /**
@@ -91,15 +89,14 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        $recipe = DB::table('recipes')
-                ->join('recipe_difficulties', 'recipes.difficulty_id', '=', 'recipe_difficulties.id')
-                ->join('recipe_cover_images', 'recipes.id', '=', 'recipe_cover_images.recipe_id')
-                ->join('recipe_meal_types', 'recipes.meal_type_id', '=', 'recipe_meal_types.id')
-                ->select('recipes.*', 'recipe_difficulties.level', 'recipe_cover_images.recipe_image_path', 'recipe_cover_images.recipe_image_caption', 'recipe_meal_types.meal_type')
-                ->where('recipes.id', '=', $recipe->id)
-                ->first();
+        $cover_image = $recipe->cover_image()->where('recipe_id', $recipe->id)->first();
+        $difficulty = RecipeDifficulty::find($recipe->difficulty_id)->level;
+        $meal_type = RecipeMealType::find($recipe->meal_type_id)->meal_type;
         return view('recipes.show')
             ->with('recipe', $recipe)
+            ->with('cover_image', $cover_image)
+            ->with('difficulty', $difficulty)
+            ->with('meal_type', $meal_type)
             ->with('title', $recipe->title);
     }
 
