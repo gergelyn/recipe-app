@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,7 @@ use App\Http\Controllers\RecipeController;
 |
 */
 
-Route::get('/', function () {
-    $title = "Főoldal";
-    return view('layouts.app')->with('title', $title);
-});
+Route::get('/', [PagesController::class, 'index']);
 
 Route::get('/impresszum', [PagesController::class, 'impresszum']);
 Route::get('/adatvedelem', [PagesController::class, 'adatvedelem']);
@@ -28,3 +26,5 @@ Route::get('/felhasznalasi-feltetelek', [PagesController::class, 'felhasznalasi_
 
 Route::resource('posts', PostController::class);
 Route::resource('recipes', RecipeController::class);
+
+Route::get('/search', SearchController::class);
