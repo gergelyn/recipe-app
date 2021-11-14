@@ -15,8 +15,13 @@ class Recipe extends Model
         'title',
         'cook_time',
         'difficulty_id',
-        'meal_type_id'
+        'meal_type_id',
+        'user_id'
     ];
+
+    public function author() {
+        return $this->belongsTo(User::class);
+    }
 
     public function difficulty() {
         return $this->hasOne(RecipeDifficulty::class);

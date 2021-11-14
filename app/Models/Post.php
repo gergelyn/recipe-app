@@ -10,10 +10,15 @@ class Post extends Model
     use HasFactory;
     protected $fillable = [
         'title',
-        'body'
+        'body',
+        'user_id'
     ];
 
+    public function author() {
+        return $this->belongsTo(User::class);
+    }
+
     public function cover_image() {
-        return $this->hasOne('App\PostCoverImage');
+        return $this->hasOne(PostCoverImage::class);
     }
 }
