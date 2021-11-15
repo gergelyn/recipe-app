@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class RecipeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth'])->only(['edit', 'store', 'update', 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *
