@@ -10,13 +10,10 @@
             <li>
                 <a href="/posts" class="p-3">Blog</a>
             </li>
-            <li>
-                <a href="#" class="p-3">Vlog</a>
-            </li>
         </ul>
         <div class="flex items-center">
             <form action="/search" method="GET">
-                <input type="search" name="query" id="query" class="border-2 border-black rounded-md px-4 py-2" placeholder="Search Recipe">
+                <input type="search" name="query" id="query" class="border-2 border-yellow-600 rounded-full px-4 py-2" placeholder="Recept keresés">
             </form>
         </div>
         <ul class="flex items-center">

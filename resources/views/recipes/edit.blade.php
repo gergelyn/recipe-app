@@ -2,7 +2,7 @@
 
 @section('content')
     <h1 class="text-lg font-bold">Recept szerkesztése</h1>
-    <a href="{{ route('recipes.index') }}" class="rounded-full bg-blue-600 text-white px-4 py-2">Back</a>
+    <a href="{{ route('recipes.index') }}" class="rounded-full bg-blue-600 text-white px-4 py-2">Vissza</a>
     @if ($errors->any())
         <div class="bg-red-600 text-white w-1/3">
             <strong>Error!</strong>

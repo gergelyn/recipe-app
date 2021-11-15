@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="text-lg font-bold mb-2">Posts</h1>
+    <h1 class="text-lg font-bold mb-2">Blog posztok</h1>
     @auth
-    <a href="{{ route('posts.create') }}" class="rounded-full bg-green-600 text-white px-4 py-2">Create</a>
+    <a href="{{ route('posts.create') }}" class="rounded-full bg-green-600 text-white px-4 py-2">Poszt kiírása</a>
     @endauth
     
     @if ($message = Session::get('status'))
@@ -19,16 +19,18 @@
                     <h4 class="ml-6 font-bold text-lg"><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h4>
                     <p class="ml-6 my-2 text-xs">{{ $post->created_at }}</p>
                     <p class="ml-6 my-2 text-xs">{{ $post->author->name }}</p>
+                    @auth
                     <form action="{{ route('posts.destroy', $post->id) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <a href="{{ route('posts.edit', $post->id) }}" class="rounded-full bg-blue-600 text-white px-4 py-2">Edit</a>
-                        <button type="submit" class="rounded-full bg-red-600 text-white px-4 py-1.5">Delete</button>
+                        <a href="{{ route('posts.edit', $post->id) }}" class="rounded-full bg-blue-600 text-white px-4 py-2">Szerkesztés</a>
+                        <button type="submit" class="rounded-full bg-red-600 text-white px-4 py-1.5">Törlés</button>
                     </form>
+                    @endauth
                 </div>
             @endforeach
         @else
-            <p>No posts found!</p>
+            <p>Nem található poszt!</p>
         @endif
     </div>
     
