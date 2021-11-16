@@ -34,4 +34,8 @@ class Recipe extends Model
     public function meal_type() {
         return $this->hasOne(RecipeMealType::class);
     }
+
+    public function ingredients() {
+        return $this->hasMany(RecipeIngredient::class);
+    }
 }
