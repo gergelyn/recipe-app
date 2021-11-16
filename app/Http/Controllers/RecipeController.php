@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use App\Models\RecipeCoverImage;
 use App\Models\RecipeDifficulty;
+use App\Models\RecipeIngredientUnitType;
 use App\Models\RecipeMealType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,9 +42,11 @@ class RecipeController extends Controller
     {
         $difficulties = RecipeDifficulty::all();
         $meal_types = RecipeMealType::all();
+        $unit_types = RecipeIngredientUnitType::all();
         return view('recipes.create')
             ->with('difficulties', $difficulties)
             ->with('meal_types', $meal_types)
+            ->with('unit_types', $unit_types)
             ->with('title', 'Recept írása');
     }
 
@@ -118,9 +121,11 @@ class RecipeController extends Controller
         }
         $difficulties = RecipeDifficulty::all();
         $meal_types = RecipeMealType::all();
+        $unit_types = RecipeIngredientUnitType::all();
         return view('recipes.edit', compact('recipe'))
             ->with('difficulties', $difficulties)
             ->with('meal_types', $meal_types)
+            ->with('unit_types', $unit_types)
             ->with('title', 'Recept szerkesztése');
     }
 
