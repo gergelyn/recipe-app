@@ -9,6 +9,7 @@ use App\Models\RecipeIngredient;
 use App\Models\RecipeIngredientMeasurementQty;
 use App\Models\RecipeIngredientName;
 use App\Models\RecipeIngredientUnitType;
+use App\Models\RecipeInstructions;
 use App\Models\RecipeMealType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -70,7 +71,8 @@ class RecipeController extends Controller
             'meal_type_id' => 'required',
             'unit_type_ids' => 'required',
             'measurement_amounts' => 'required',
-            'ingredient_names' => 'required'
+            'ingredient_names' => 'required',
+            'instructions' => 'required'
         ]);
 
         $title = $request->title;
@@ -101,6 +103,13 @@ class RecipeController extends Controller
             ]);
         }
 
+        for($i = 0; $i < count($request->instructions); $i++) {
+            RecipeInstructions::create([
+                'instruction_text' => $request->instructions[$i],
+                'recipe_id' => $recipe->id
+            ]);
+        }
+
         $imageName = time().'.'.$image->extension();
         $image->move(public_path('images'), $imageName);
         RecipeCoverImage::create([
@@ -125,12 +134,14 @@ class RecipeController extends Controller
         $difficulty = RecipeDifficulty::find($recipe->difficulty_id)->level;
         $meal_type = RecipeMealType::find($recipe->meal_type_id)->meal_type;
         $ingredients = $recipe->ingredients()->get();
+        $instructions = $recipe->instructions()->get();
         return view('recipes.show')
             ->with('recipe', $recipe)
             ->with('cover_image', $cover_image)
             ->with('difficulty', $difficulty)
             ->with('meal_type', $meal_type)
             ->with('ingredients', $ingredients)
+            ->with('instructions', $instructions)
             ->with('title', $recipe->title);
     }
 
