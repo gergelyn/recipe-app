@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use App\Models\RecipeCoverImage;
 use App\Models\RecipeDifficulty;
+use App\Models\RecipeIngredient;
+use App\Models\RecipeIngredientMeasurementQty;
+use App\Models\RecipeIngredientName;
 use App\Models\RecipeIngredientUnitType;
 use App\Models\RecipeMealType;
 use Illuminate\Http\Request;
@@ -58,12 +61,16 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required',
             'cook_time' => 'required',
             'difficulty_id' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'meal_type_id' => 'required'
+            'meal_type_id' => 'required',
+            'unit_type_ids' => 'required',
+            'measurement_amounts' => 'required',
+            'ingredient_names' => 'required'
         ]);
 
         $title = $request->title;
@@ -76,6 +83,23 @@ class RecipeController extends Controller
             'meal_type_id' => $request->meal_type_id,
             'user_id' => auth()->user()->id
         ]);
+
+        for($i = 0; $i < count($request->unit_type_ids); $i++) {
+            $unit_type_id = $request->unit_type_ids[$i];
+            $measurement_amount = RecipeIngredientMeasurementQty::create([
+                'amount' => $request->measurement_amounts[$i]
+            ]);
+            $ingredient_name = RecipeIngredientName::create([
+                'ingredient_name' => $request->ingredient_names[$i]
+            ]);
+
+            RecipeIngredient::create([
+                'recipe_id' => $recipe->id,
+                'measurement_unit_id' => $unit_type_id,
+                'measurement_qty_id' => $measurement_amount->id,
+                'ingredient_name_id' => $ingredient_name->id
+            ]);
+        }
 
         $imageName = time().'.'.$image->extension();
         $image->move(public_path('images'), $imageName);
@@ -100,11 +124,13 @@ class RecipeController extends Controller
         $cover_image = $recipe->cover_image()->where('recipe_id', $recipe->id)->first();
         $difficulty = RecipeDifficulty::find($recipe->difficulty_id)->level;
         $meal_type = RecipeMealType::find($recipe->meal_type_id)->meal_type;
+        $ingredients = $recipe->ingredients()->get();
         return view('recipes.show')
             ->with('recipe', $recipe)
             ->with('cover_image', $cover_image)
             ->with('difficulty', $difficulty)
             ->with('meal_type', $meal_type)
+            ->with('ingredients', $ingredients)
             ->with('title', $recipe->title);
     }
 
