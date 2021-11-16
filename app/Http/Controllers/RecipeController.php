@@ -180,7 +180,11 @@ class RecipeController extends Controller
             'cook_time' => 'required',
             'difficulty_id' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'meal_type_id' => 'required'
+            'meal_type_id' => 'required',
+            'unit_type_ids' => 'required',
+            'measurement_amounts' => 'required',
+            'ingredient_names' => 'required',
+            'instructions' => 'required'
         ]);
 
         $image = $recipe->cover_image()->where('recipe_id', $recipe->id)->first();
@@ -191,6 +195,42 @@ class RecipeController extends Controller
             'difficulty_id' => $request->difficulty_id,
             'meal_type_id' => $request->meal_type_id
         ]);
+
+        $ingredients = $recipe->ingredients()->get();
+        foreach($ingredients as $ingredient) {
+            $ingredient->measurement_qty()->delete();
+            $ingredient->ingredient_name()->delete();
+            $ingredient->delete();
+        }
+
+        $instructions = $recipe->instructions()->get();
+        foreach($instructions as $instruction) {
+            $instruction->delete();
+        }
+
+        for($i = 0; $i < count($request->unit_type_ids); $i++) {
+            $unit_type_id = $request->unit_type_ids[$i];
+            $measurement_amount = RecipeIngredientMeasurementQty::create([
+                'amount' => $request->measurement_amounts[$i]
+            ]);
+            $ingredient_name = RecipeIngredientName::create([
+                'ingredient_name' => $request->ingredient_names[$i]
+            ]);
+
+            RecipeIngredient::create([
+                'recipe_id' => $recipe->id,
+                'measurement_unit_id' => $unit_type_id,
+                'measurement_qty_id' => $measurement_amount->id,
+                'ingredient_name_id' => $ingredient_name->id
+            ]);
+        }
+
+        for($i = 0; $i < count($request->instructions); $i++) {
+            RecipeInstructions::create([
+                'instruction_text' => $request->instructions[$i],
+                'recipe_id' => $recipe->id
+            ]);
+        }
 
         if ($request->hasFile('image')) {
             unlink(public_path().$image->recipe_image_path);
@@ -219,9 +259,23 @@ class RecipeController extends Controller
         if(auth()->user()->id !== $recipe->user_id) {
             return redirect('/recipes')->with('status', 'Nem elérhetô');
         }
+
+        $ingredients = $recipe->ingredients()->get();
+        foreach($ingredients as $ingredient) {
+            $ingredient->measurement_qty()->delete();
+            $ingredient->ingredient_name()->delete();
+            $ingredient->delete();
+        }
+
+        $instructions = $recipe->instructions()->get();
+        foreach($instructions as $instruction) {
+            $instruction->delete();
+        }
+
         $image = $recipe->cover_image()->where('recipe_id', $recipe->id)->first();
         unlink(public_path().$image->recipe_image_path);
         $image->delete();
+
         $recipe->delete();
         return redirect('/recipes')
             ->with('title', 'Recipes')
