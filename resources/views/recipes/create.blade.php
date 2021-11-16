@@ -65,17 +65,31 @@
         <div class="mb-4">
             <a id="plus-ingredient" class="w-full border border-blue-600 p-3 cursor-pointer bg-blue-600 hover:border-blue-700 hover:bg-blue-700 text-white">+</a>
         </div>
+
+        <div class="mb-4 instructions">
+            <label for="instructions">Elkészítés</label>
+            <div class="instruction my-2">
+                <input type="text" name="instructions[]" id="instruction" class="border-2 border-black rounded-md" placeholder="Teendô">
+            </div>
+        </div>
         
+        <div class="mb-4">
+            <a id="plus-instruction" class="w-full border border-blue-600 p-3 cursor-pointer bg-blue-600 hover:border-blue-700 hover:bg-blue-700 text-white">+</a>
+        </div>
+
         <button type="submit" class="p-3 border border-yellow-600 bg-yellow-600 rounded-full text-white hover:border-yellow-700 hover:bg-yellow-700 mt-2">Posztolás</button>
     </form>
 @endsection
 
 @section('script')
     <script>
-        let plusBtn = document.querySelector("#plus-ingredient");
+        let plusIngredientBtn = document.querySelector("#plus-ingredient");
         let ingredientsContainer = document.querySelector(".ingredients");
+        
+        let plusInstructionBtn = document.querySelector("#plus-instruction");
+        let instructionsContainer = document.querySelector(".instructions");
 
-        plusBtn.addEventListener("click", function() {
+        plusIngredientBtn.addEventListener("click", function() {
             let unitTypes = [
                 @foreach($unit_types as $unit_type)
                     ["{{ $unit_type->id }}", "{{ $unit_type->unit_type }}"],
@@ -113,6 +127,18 @@
             ingredientContainer.appendChild(measurementAmountInput);
             ingredientContainer.appendChild(ingredientNameInput);
             ingredientsContainer.appendChild(ingredientContainer);
+        });
+
+        plusInstructionBtn.addEventListener("click", function() {
+            let instructionContainer = document.createElement("div");
+            instructionContainer.setAttribute("class", "instruction my-2");
+            let instructionInput = document.createElement("input");
+            instructionInput.setAttribute("type", "text");
+            instructionInput.setAttribute("name", "instructions[]");
+            instructionInput.setAttribute("class", "border-2 border-black rounded-md");
+            instructionInput.setAttribute("placeholder", "Teendô");
+            instructionContainer.appendChild(instructionInput);
+            instructionsContainer.appendChild(instructionContainer);
         });
     </script>
 @endsection
