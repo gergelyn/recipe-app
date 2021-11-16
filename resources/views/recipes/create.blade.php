@@ -52,12 +52,12 @@
         <div class="mb-4 ingredients">
             <label for="ingredients">Alapanyagok</label>
             <div class="ingredient my-2">
+                <input type="number" name="measurement_amounts[]" id="measurement_amounts" class="border-2 border-black rounded-md" placeholder="Mennyiség">
                 <select name="unit_type_ids[]" id="unit_type_ids" class="border-2 border-black rounded-md">
                     @foreach ($unit_types as $unit_type)
                         <option value="{{ $unit_type->id }}">{{ $unit_type->unit_type }}</option>
                     @endforeach
                 </select>
-                <input type="number" name="measurement_amounts[]" id="measurement_amounts" class="border-2 border-black rounded-md" placeholder="Mennyiség">
                 <input type="text" name="ingredient_names[]" id="ingredient_names" class="border-2 border-black rounded-md" placeholder="Alapanyag">
             </div>
         </div>
@@ -123,8 +123,8 @@
             ingredientNameInput.setAttribute("id", "ingredient_names");
             ingredientNameInput.setAttribute("placeholder", "Alapanyag");
 
-            ingredientContainer.appendChild(unitTypeIdSelect);
             ingredientContainer.appendChild(measurementAmountInput);
+            ingredientContainer.appendChild(unitTypeIdSelect);
             ingredientContainer.appendChild(ingredientNameInput);
             ingredientsContainer.appendChild(ingredientContainer);
         });
