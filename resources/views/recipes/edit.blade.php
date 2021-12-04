@@ -73,6 +73,7 @@
                         @endforeach
                     </select>
                     <input type="text" name="ingredient_names[]" id="ingredient_names" class="border border-black rounded-full h-10 p-2" placeholder="Alapanyag" value={{ $ingredient->ingredient_name->ingredient_name }}>
+                    <a onclick="remove(this.parentElement)" class="ml-6 rounded-full bg-red-600 hover:bg-red-700 py-3 px-4 cursor-pointer text-white font-bold">X</a>
                 </div>
                 @endforeach
             </div>
@@ -89,6 +90,7 @@
                 @foreach ($recipe->instructions()->get() as $instruction)
                 <li>
                     <input type="text" name="instructions[]" id="instruction" class="instruction my-2 border border-black rounded-full h-10 p-2" placeholder="Teendő" value="{{ $instruction->instruction_text }}">
+                    <a onclick="remove(this.parentElement)" class="ml-6 rounded-full bg-red-600 hover:bg-red-700 py-3 px-4 cursor-pointer text-white font-bold">X</a>
                 </li>
                 @endforeach
                 </ol>
@@ -111,7 +113,9 @@
         let plusInstructionBtn = document.querySelector("#plus-instruction");
         let instructionsContainer = document.querySelector(".instructions");
 
-        let count = 0;
+        function remove(el) {
+            el.remove();
+        }
 
         plusIngredientBtn.addEventListener("click", function() {
             let unitTypes = [
@@ -147,9 +151,10 @@
             ingredientNameInput.setAttribute("id", "ingredient_names");
             ingredientNameInput.setAttribute("placeholder", "Alapanyag");
 
-            let deleteButton = document.createElement("button");
-            deleteButton.setAttribute("class", "rounded-full bg-red-600");
-
+            let deleteButton = document.createElement("a");
+            deleteButton.innerText = "X";
+            deleteButton.setAttribute("class", "ml-6 rounded-full bg-red-600 hover:bg-red-700 py-3 px-4 cursor-pointer text-white font-bold");
+            deleteButton.setAttribute("onclick", "remove(this.parentElement)");
 
             ingredientContainer.appendChild(measurementAmountInput);
             ingredientContainer.appendChild(unitTypeIdSelect);
@@ -172,23 +177,11 @@
             let deleteButton = document.createElement("a");
             deleteButton.innerText = "X";
             deleteButton.setAttribute("class", "ml-6 rounded-full bg-red-600 hover:bg-red-700 py-3 px-4 cursor-pointer text-white font-bold");
-            deleteButton.setAttribute("id", `delete-instruction-${count}`);
-
-            deleteButton.addEventListener("click", () => {
-                console.log(deleteButton);
-                const deleteId = deleteButton.getAttribute("id");
-                const deleteIndex = deleteId.substring(19, deleteId.length);
-                console.log(deleteIndex);
-                console.log(instructionList.children[deleteIndex]);
-                instructionList.children[deleteIndex].remove();
-            })
+            deleteButton.setAttribute("onclick", "remove(this.parentElement)");
 
             instructionContainer.appendChild(instructionInput);
             instructionContainer.appendChild(deleteButton);
             instructionList.appendChild(instructionContainer);
-
-            console.log(deleteButton);
-            count++;
         });
     </script>
 @endsection
