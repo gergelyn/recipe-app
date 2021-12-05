@@ -7,9 +7,9 @@
         <h1 class="text-lg font-bold mb-4">{{ $recipe->title }}</h1>
 
         <div class="flex flex-row">
-            <p>{{ $recipe->cook_time }} perc</p>
-            <p>{{ $difficulty }}</p>
-            <p>{{ $meal_type }}</p>
+            <p class="mr-2">{{ $recipe->cook_time }} perc</p>|
+            <p class="mx-2">{{ $difficulty }}</p>|
+            <p class="mx-2">{{ $meal_type }}</p>
         </div>
 
         <hr class="my-4">
