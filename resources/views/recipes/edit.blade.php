@@ -62,7 +62,7 @@
 
             <hr class="mb-4">
 
-            <div class="mb-4 ingredients">
+            <div class="mb-4 ingredients w-max">
                 <label for="ingredients">Hozzávalók</label>
                 @foreach ($recipe->ingredients as $ingredient)
                 <div class="ingredient my-2">
@@ -73,7 +73,7 @@
                         @endforeach
                     </select>
                     <input type="text" name="ingredient_names[]" id="ingredient_names" class="border border-black rounded-full h-10 p-2" placeholder="Alapanyag" value={{ $ingredient->ingredient_name->ingredient_name }}>
-                    <a onclick="remove(this.parentElement)" class="ml-6 rounded-full bg-red-600 hover:bg-red-700 py-3 px-4 cursor-pointer text-white font-bold">X</a>
+                    <a onclick="remove(this.parentElement)" class="ml-4 rounded-full bg-red-600 hover:bg-red-700 py-3 px-4 cursor-pointer text-white font-bold">X</a>
                 </div>
                 @endforeach
             </div>
@@ -89,7 +89,7 @@
                 <ol id="instruction-list" class="list-decimal">
                 @foreach ($recipe->instructions()->get() as $instruction)
                 <li>
-                    <input type="text" name="instructions[]" id="instruction" class="instruction my-2 border border-black rounded-full h-10 p-2" placeholder="Teendő" value="{{ $instruction->instruction_text }}">
+                    <input type="text" name="instructions[]" id="instruction" class="instruction my-2 border border-black rounded-full h-10 p-2 w-3/4" placeholder="Teendő" value="{{ $instruction->instruction_text }}">
                     <a onclick="remove(this.parentElement)" class="ml-6 rounded-full bg-red-600 hover:bg-red-700 py-3 px-4 cursor-pointer text-white font-bold">X</a>
                 </li>
                 @endforeach
@@ -169,7 +169,7 @@
             let instructionInput = document.createElement("input");
             instructionInput.setAttribute("type", "text");
             instructionInput.setAttribute("name", "instructions[]");
-            instructionInput.setAttribute("class", "border border-black rounded-full h-10 p-2");
+            instructionInput.setAttribute("class", "border border-black rounded-full h-10 p-2 w-3/4");
             instructionInput.setAttribute("placeholder", "Teendő");
 
             let instructionList = document.querySelector("#instruction-list");

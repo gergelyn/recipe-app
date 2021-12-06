@@ -7,6 +7,6 @@
         <hr class="my-4">
         <p>{!! $post->body !!}</p>
         <hr class="my-4">
-        <small class="mr-2">{{ $post->author->name }}</small>|<small class="ml-2">{{ $post->created_at }}</small>
+        <small class="mr-2">{{ $post->author->name }}</small>|<small class="ml-2">{{ date("Y.m.d", strtotime($post->created_at)) }}</small>
     </div>
 @endsection

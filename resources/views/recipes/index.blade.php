@@ -32,14 +32,16 @@
                         <span class="ml-6 my-2 text-xs">{{ $recipe->cook_time }} perc</span>
                         <span class="mr-16 my-2 text-xs">{{ Str::title($difficulties->find($recipe->difficulty_id)->level) }}</span>
                     </div>
-                    @auth
-                    <form action="{{ route('recipes.destroy', $recipe->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <a href="{{ route('recipes.edit', $recipe->id) }}" class="rounded-full bg-blue-600 text-white px-4 py-2">Szerkesztés</a>
-                        <button type="submit" class="rounded-full bg-red-600 text-white px-4 py-1.5">Törlés</button>
-                    </form>
-                    @endauth
+                    <div class="ml-4 mb-4">
+                        @auth
+                        <form action="{{ route('recipes.destroy', $recipe->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <a href="{{ route('recipes.edit', $recipe->id) }}" class="rounded-full bg-blue-600 text-white px-4 py-2">Szerkesztés</a>
+                            <button type="submit" class="rounded-full bg-red-600 text-white px-4 py-1.5">Törlés</button>
+                        </form>
+                        @endauth
+                    </div>
                 </div>
             @endforeach
         @else
