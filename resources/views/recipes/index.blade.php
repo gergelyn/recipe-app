@@ -5,9 +5,9 @@
         <div class="flex items-center">
             <form action="/search" method="GET">
                 <input type="search" name="query" id="query" class="border-2 border-yellow-600 rounded-full px-4 py-2" placeholder="Recept keresés">
+                <button class="bg-yellow-600 rounded-full px-4 py-2 text-white ml-2">KERESÉS</button>
             </form>
         </div>
-        <button class="bg-yellow-600 rounded-full px-4 py-2 text-white ml-2">KERESÉS</button>
     </div>
     @auth
     <div class="my-6">
